@@ -9,6 +9,7 @@ const ContactForm = ({ onSubmit }) => {
   const handleChangeInput = event => {
     const inputName = event.target.name;
     const inputValue = event.target.value;
+
     switch (inputName) {
       case 'name':
         setName(inputValue);
