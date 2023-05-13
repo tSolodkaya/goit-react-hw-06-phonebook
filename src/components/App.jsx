@@ -35,7 +35,7 @@ export const App = () => {
           deleteFn={id => dispatch(deleteContact(id))}
         />
       ) : (
-        <div>No contacts to show</div>
+        <div className={css.nocontact}>No contacts to show</div>
       )}
     </div>
   );
