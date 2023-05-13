@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { nanoid } from 'nanoid';
 import Notiflix from 'notiflix';
 
@@ -31,12 +33,25 @@ export const contactSlice = createSlice({
     },
 
     deleteContact(state, action) {
-      const con = state.contacts.find(contact => contact.id === action.payload);
-      const index = state.contacts.indexOf(con);
+      const contactToDelete = state.contacts.find(
+        contact => contact.id === action.payload
+      );
+      const index = state.contacts.indexOf(contactToDelete);
       state.contacts.splice(index, 1);
     },
   },
 });
+
+const persistConfig = {
+  key: 'contacts',
+  storage,
+  whitelist: ['contacts'],
+};
+
+export const contactsReduser = persistReducer(
+  persistConfig,
+  contactSlice.reducer
+);
 
 export const { addContact, filterContacts, deleteContact } =
   contactSlice.actions;
