@@ -1,12 +1,13 @@
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactList from 'components/ContactList/ContactList';
 import Filter from 'components/Filter/Filter';
+import { getContact, getFilter } from 'redux/selectors';
 import { useSelector } from 'react-redux';
 import css from './App.module.css';
 
 export const App = () => {
-  const stateContacts = useSelector(state => state.phonebook.contacts);
-  const stateFilter = useSelector(state => state.phonebook.filter);
+  const stateContacts = useSelector(getContact);
+  const stateFilter = useSelector(getFilter);
 
   const normilizedFilter = stateFilter.toLowerCase();
   const visibleContacts = stateContacts.filter(contact => {

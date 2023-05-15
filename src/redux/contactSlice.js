@@ -15,10 +15,9 @@ export const contactSlice = createSlice({
     },
 
     deleteContact(state, action) {
-      const contactToDelete = state.contacts.find(
+      const index = state.contacts.findIndex(
         contact => contact.id === action.payload
       );
-      const index = state.contacts.indexOf(contactToDelete);
       state.contacts.splice(index, 1);
     },
   },
