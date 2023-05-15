@@ -2,18 +2,12 @@ import PropTypes from 'prop-types';
 import ContactListItem from 'components/ContactListItem/ContactListItem';
 import css from './ContactList.module.css';
 
-const ContactList = ({ contacts, deleteFn }) => {
+const ContactList = ({ contacts }) => {
   return (
     <div className={css.contactList}>
       <ul className={css.list}>
         {contacts.map(({ id, name, number }) => (
-          <ContactListItem
-            key={id}
-            id={id}
-            name={name}
-            number={number}
-            deleteContact={() => deleteFn(id)}
-          />
+          <ContactListItem key={id} id={id} name={name} number={number} />
         ))}
       </ul>
     </div>
@@ -22,7 +16,6 @@ const ContactList = ({ contacts, deleteFn }) => {
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  deleteFn: PropTypes.func.isRequired,
 };
 
 export default ContactList;

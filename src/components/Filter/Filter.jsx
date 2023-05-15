@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
-import css from './Filter.module.css';
+import { useDispatch } from 'react-redux';
 
-const Filter = ({ nameForFind, onFilter }) => {
+import css from './Filter.module.css';
+import { filterContacts } from 'redux/contactSlice';
+
+const Filter = ({ nameForFind }) => {
+  const dispatch = useDispatch();
+
   return (
     <div className={css.filterContainer}>
       <label className={css.filterName}>
@@ -11,7 +16,7 @@ const Filter = ({ nameForFind, onFilter }) => {
           type="text"
           name="filter"
           value={nameForFind}
-          onChange={onFilter}
+          onChange={event => dispatch(filterContacts(event.target.value))}
         />
       </label>
     </div>

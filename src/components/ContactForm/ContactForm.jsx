@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-import css from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import Notiflix from 'notiflix';
+import { nanoid } from 'nanoid';
 
-const ContactForm = ({ onSubmit }) => {
+import css from './ContactForm.module.css';
+import { addContact } from 'redux/contactSlice';
+
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const stateContacts = useSelector(state => state.phonebook.contacts);
+
+  const dispatch = useDispatch();
 
   const handleChangeInput = event => {
     const inputName = event.target.name;
@@ -25,7 +32,23 @@ const ContactForm = ({ onSubmit }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    onSubmit({ name, number });
+    const isContactInBook = stateContacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (isContactInBook) {
+      return Notiflix.Notify.failure(`${name} is already in contacts`);
+    }
+
+    const contactId = nanoid();
+
+    const contact = {
+      name: name,
+      number: number,
+      id: contactId,
+    };
+
+    dispatch(addContact(contact));
+
     setName('');
     setNumber('');
   };
@@ -65,7 +88,4 @@ const ContactForm = ({ onSubmit }) => {
   );
 };
 
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
 export default ContactForm;
